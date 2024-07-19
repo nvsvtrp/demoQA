@@ -26,7 +26,15 @@ export class ElementsPage extends basePage {
     }
    
     CheckBoxButtons = {
+    checkBoxButton: this.page.locator('li').filter({ hasText: 'Check Box' }),
+    expandButton:this.page.locator('.rct-option.rct-option-expand-all'),
+    collapseButton: this.page.locator('.rct-option.rct-option-collapse-all'),
+    homeCheckbox: this.page.locator('"Home"'),
 
+    }
+
+    CheckBoxLabels = {
+    resultLabel: this.page.locator('#result'),
     }
 
     RadioButtons = {

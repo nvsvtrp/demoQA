@@ -39,9 +39,22 @@ test ('Click to TextBox button. Enter incorrect data in email field. The entered
 
 })
 
-test ('Click', async ({page, pageManager}) => {
-    
+test ('Click to CheckBox button. Click to the plus button. List is opened. Click to the minus button. List is closed.', async ({page, pageManager}) => {
+    await pageManager.elements.CheckBoxButtons.checkBoxButton.click();
+    await pageManager.elements.CheckBoxButtons.expandButton.click();
+    await expect (page.getByText('Angular')).toBeVisible();
+    await pageManager.elements.CheckBoxButtons.checkBoxButton.click();
+    await pageManager.elements.CheckBoxButtons.collapseButton.click();
+    await expect (page.getByText('Angular')).toBeHidden();
 })
+
+test ('Click to CheckBox button. Click to the Home checkbox. Result label show all branch.', async ({page, pageManager}) => {
+    await pageManager.elements.CheckBoxButtons.checkBoxButton.click();
+    await pageManager.elements.CheckBoxButtons.homeCheckbox.click();
+    await expect (pageManager.elements.CheckBoxButtons.homeCheckbox).toBeChecked();
+    await expect (pageManager.elements.CheckBoxLabels.resultLabel).toContainText('excelFile ');
+})
+
 
 
 })
