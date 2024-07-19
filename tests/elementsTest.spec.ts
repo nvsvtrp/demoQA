@@ -36,9 +36,9 @@ test ('Click to TextBox button. Enter incorrect data in email field. The entered
     await expect (pageManager.elements.TextBoxLabels.emailLabel).toBeHidden();
     await expect (pageManager.elements.TextBoxLabels.currentAdressLabel).toBeHidden();
     await expect (pageManager.elements.TextBoxLabels.permanentAdressLabel).toBeHidden();
-
-
 })
+
+
 
 
 })
