@@ -1,5 +1,6 @@
 import { Page } from "@playwright/test";
 import { MainPage } from "./mainPage";
+import { RandomValues } from "./randomValues";
 import { AlertsPage } from "./Alerts/alertsPage";
 import { BrowserWindowsPage } from "./Alerts/browserWindowsPage";
 import { FramesPage } from "./Alerts/framesPage";
@@ -70,6 +71,7 @@ export class PageManager {
   slider;
   tabs;
   toolTips;
+  randomValues;
 
   constructor(page) {
     this.page = page;
@@ -107,5 +109,6 @@ export class PageManager {
     this.slider = new SliderPage(page);
     this.tabs = new TabsPage(page);
     this.toolTips = new ToolTipsPage(page);
+    this.randomValues = new RandomValues(page);
   }
 }
