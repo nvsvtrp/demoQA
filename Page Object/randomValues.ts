@@ -4,11 +4,41 @@ export class RandomValues extends basePage {
         super (page)
     }
     getRandomName(): string {
+        const firstName = this.getRandomFirstname();
+        const lastName = this.getRandomLastName();
+        return `${firstName} ${lastName}`;
+    }
+    
+    getRandomFirstname(): string {
         const firstNames: string[] = ["Andrey", "Alexandr", "Oleg", "Victor", "German", "Artem", "Denis"];
-        const lastNames: string[] = ["Petrov", "Ivanov", "Sokolov", "Orlov", "Kazakov", "Nekrasov", "Kulagin"];
         const randomFirstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+        return `${randomFirstName}`;
+    }
+
+    getRandomLastName(): string {
+        const lastNames: string[] = ["Petrov", "Ivanov", "Sokolov", "Orlov", "Kazakov", "Nekrasov", "Kulagin"];
         const randomLastName = lastNames[Math.floor(Math.random() * lastNames.length)];
-        return `${randomFirstName} ${randomLastName}`;
+        return `${randomLastName}`;
+    }
+
+    getRandomAge(): string {
+        const minAge = 18;
+        const maxAge = 78;
+        const randomAge = Math.floor(Math.random() * (maxAge - minAge + 1)) + minAge;
+        return `${randomAge}`;
+    }
+
+    getRandomSalary(): string {
+        const minSalary = 1000;
+        const maxSalary = 9000;
+        const randomAge = Math.floor(Math.random() * (maxSalary - minSalary + 1)) + minSalary;
+        return `${randomAge}`;
+    }
+
+    getRandomDepartment(): string {
+        const departments: string[] = ["Finance", "Marketing", "Sales", "Information Technology", "Customer Service", "Research and Development", "Human Resources"];
+        const randomLastName = departments[Math.floor(Math.random() * departments.length)];
+        return `${randomLastName}`;
     }
     
     getRandomEmail(): string {
