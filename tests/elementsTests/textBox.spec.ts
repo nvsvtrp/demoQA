@@ -23,7 +23,7 @@ test.describe('Open the main page of the site. Click to the Elements button. The
         await expect (pageManager.textBox.Labels.currentAdressLabel).toContainText(randomCurrentStreet);
         await expect (pageManager.textBox.Labels.permanentAdressLabel).toContainText(randomPermanentStreet);
 })
-    test ('Click to TextBox button. Enter incorrect data in email field. The entered data didnt appears in the botton field. The email field is highlighted in red.', async ({pageManager}) => {
+    test ('Click to TextBox button. Enter incorrect data in email field. The entered data didnt appears in the botton field. The email field is highlighted in red.', async ({page, pageManager}) => {
         const randomName = pageManager.randomValues.getRandomName();
         const randomCurrentStreet = pageManager.randomValues.getRandomStreet();
         const randomPermanentStreet = pageManager.randomValues.getRandomStreet();
@@ -34,6 +34,7 @@ test.describe('Open the main page of the site. Click to the Elements button. The
         await pageManager.textBox.Fields.permanentAdressField.fill(randomPermanentStreet);
         await pageManager.textBox.Buttons.submitButton.click();
         await expect (pageManager.textBox.Fields.fieldError).toBeVisible();
+        await expect(page.locator('.field-error')).toHaveCSS('border-color', 'rgb(255, 0, 0)');
         await expect (pageManager.textBox.Labels.nameLabel).toBeHidden();
         await expect (pageManager.textBox.Labels.emailLabel).toBeHidden();
         await expect (pageManager.textBox.Labels.currentAdressLabel).toBeHidden();

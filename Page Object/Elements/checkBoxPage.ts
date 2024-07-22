@@ -9,6 +9,8 @@ export class CheckBoxPage extends basePage {
     expandButton: this.page.locator(".rct-option.rct-option-expand-all"),
     collapseButton: this.page.locator(".rct-option.rct-option-collapse-all"),
     homeCheckbox: this.page.locator('"Home"'),
+    downloadsCheckbox: this.page.locator("#tree-node-downloads"),
+    arrowHomeButton: this.page.locator(".rct-collapse.rct-collapse-btn"),
   };
 
   Labels = {
