@@ -4,7 +4,7 @@ export class WebTablesPage extends basePage {
     super(page);
   }
   Buttons = {
-    webTalesButton: this.page.locator("li").filter({ hasText: "Web Tables" }),
+    webTalesButton: this.page.getByText("Web Tables"),
     addButton: this.page.locator("#addNewRecordButton"),
     submitButton: this.page.locator("#submit"),
     deleteButton: this.page.locator('#delete-record-4 path'),

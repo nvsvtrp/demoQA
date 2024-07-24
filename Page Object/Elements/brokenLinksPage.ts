@@ -12,4 +12,4 @@ export class BrokenLinksPage extends basePage {
     Images = {
         validImage: this.page.locator('[class="row"][src="/images/Toolsqa.jpg"]')
     }
-}
+}   

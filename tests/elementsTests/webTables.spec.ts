@@ -15,12 +15,15 @@ test.describe('Open the main page of the site. Click to the Elements button. The
         const randomSalary = pageManager.randomValues.getRandomSalary();
         const randomDepartment = pageManager.randomValues.getRandomDepartment();
         await addRandomUserToWebTable(pageManager, randomFirstName, randomLastName, randomAge, randomEmail, randomSalary, randomDepartment);
-        await expect (page.locator('div:nth-child(4) > .rt-tr > div').first()).toContainText(randomFirstName);
-        await expect (page.locator('div:nth-child(4) > .rt-tr > div:nth-child(2)')).toContainText(randomLastName);
-        await expect (page.locator('div:nth-child(4) > .rt-tr > div:nth-child(3)')).toContainText(randomAge);
-        await expect (page.locator('div:nth-child(4) > .rt-tr > div:nth-child(4)')).toContainText(randomEmail);
-        await expect (page.locator('div:nth-child(4) > .rt-tr > div:nth-child(5)')).toContainText(randomSalary);
-        await expect (page.locator('div:nth-child(4) > .rt-tr > div:nth-child(6)')).toContainText(randomDepartment);
+        const expectedValues = [
+            randomFirstName,
+            randomLastName,
+            randomAge,
+            randomEmail,
+            randomSalary,
+            randomDepartment
+        ];
+        await verifyTableRow(page, 4, expectedValues);
 })
 
     test ('Click to Web Tables button. Add new member. Delete new member. Member has been deleted.', async ({pageManager,page}) => {
@@ -30,14 +33,23 @@ test.describe('Open the main page of the site. Click to the Elements button. The
         const randomEmail = pageManager.randomValues.getRandomEmail();
         const randomSalary = pageManager.randomValues.getRandomSalary();
         const randomDepartment = pageManager.randomValues.getRandomDepartment();
+        const resultOfFirstName = '';
+        const resultOfLastName = '';
+        const resultOfAge = '';
+        const resultOfEmail = '';
+        const resultOfSalary = '';
+        const resultOfDepartment = '';
         await addRandomUserToWebTable(pageManager, randomFirstName, randomLastName, randomAge, randomEmail, randomSalary, randomDepartment);
         await pageManager.webTables.Buttons.deleteButton.click();
-        await expect (page.locator('div:nth-child(4) > .rt-tr > div').first()).toContainText('');
-        await expect (page.locator('div:nth-child(4) > .rt-tr > div:nth-child(2)')).toContainText('');
-        await expect (page.locator('div:nth-child(4) > .rt-tr > div:nth-child(3)')).toContainText('');
-        await expect (page.locator('div:nth-child(4) > .rt-tr > div:nth-child(4)')).toContainText('');
-        await expect (page.locator('div:nth-child(4) > .rt-tr > div:nth-child(5)')).toContainText('');
-        await expect (page.locator('div:nth-child(4) > .rt-tr > div:nth-child(6)')).toContainText('');
+        const expectedValues = [
+            resultOfFirstName,
+            resultOfLastName,
+            resultOfAge,
+            resultOfEmail,
+            resultOfSalary,
+            resultOfDepartment,
+        ];
+        await verifyTableRow(page, 4, expectedValues);
 })
 test ('Click to Web Tables button. Add new member. Type in search field email of added user. User has been showed in table ', async ({pageManager,page}) => {
     const randomFirstName = pageManager.randomValues.getRandomFirstname();
@@ -48,7 +60,6 @@ test ('Click to Web Tables button. Add new member. Type in search field email of
     const randomDepartment = pageManager.randomValues.getRandomDepartment();
     await addRandomUserToWebTable(pageManager, randomFirstName, randomLastName, randomAge, randomEmail, randomSalary, randomDepartment);
     await pageManager.webTables.Fields.searchField.fill(randomEmail);
-
     await expect (page.locator('.rt-td').first()).toContainText(randomFirstName);
     await expect (page.locator('.rt-tr-group > .rt-tr > div:nth-child(2)').first()).toContainText(randomLastName);
     await expect (page.locator('.rt-tr-group > .rt-tr > div:nth-child(3)').first()).toContainText(randomAge);
@@ -70,7 +81,19 @@ async function addRandomUserToWebTable(pageManager: any, firstName: string, last
 }
 
 
+async function verifyTableRow(page, rowIndex, expectedValues) {
+    const selectors = [
+        `div:nth-child(${rowIndex}) > .rt-tr > div:nth-child(1)`,
+        `div:nth-child(${rowIndex}) > .rt-tr > div:nth-child(2)`,
+        `div:nth-child(${rowIndex}) > .rt-tr > div:nth-child(3)`,
+        `div:nth-child(${rowIndex}) > .rt-tr > div:nth-child(4)`,
+        `div:nth-child(${rowIndex}) > .rt-tr > div:nth-child(5)`,
+        `div:nth-child(${rowIndex}) > .rt-tr > div:nth-child(6)`,
+    ];
 
-
+    for (let i = 0; i < selectors.length; i++) {
+        await expect(page.locator(selectors[i])).toContainText(expectedValues[i]);
+    }
+}
 
 })
