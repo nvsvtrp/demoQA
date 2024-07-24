@@ -42,6 +42,4 @@ test.describe('Open the main page of the site. Click to the Elements button. The
 
 })
 
-
-
 })
