@@ -1,4 +1,3 @@
-import { PageManager } from "../../Page Object/pageManager";
 import { test } from "../baseTest";
 import { expect } from "@playwright/test";
 
