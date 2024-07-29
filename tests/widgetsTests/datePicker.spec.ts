@@ -3,7 +3,7 @@ import { expect } from "@playwright/test";
 
 test.describe("Go to the Date Picker page by url. The Date Picker page has opened.", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("https://demoqa.com/date-picker");
+    await page.goto("/date-picker");
   });
 
   test(' "Select Date" label shows current date', async ({ pageManager }) => {
