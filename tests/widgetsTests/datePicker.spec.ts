@@ -34,15 +34,16 @@ test.describe("Go to the Date Picker page by url. The Date Picker page has opene
   })
 
   test("Click to the 'Select Date and Time'. Select a specific month,day. Selected values shows in Select Date Label.", async ({ page, pageManager }) => {
+    const numberOfClicksPerButton = 25;
     await pageManager.datePicker.Buttons.selectDateAndTimeButton.click();
     await page.locator('.react-datepicker__month-read-view--down-arrow').click();
     await page.getByText('March').click();
     await page.getByText('2024', { exact: true }).click();
-    await page.locator('a').nth(3).click({clickCount: 25});
+    await page.locator('a').nth(3).click({clickCount: numberOfClicksPerButton});
     await page.getByText('1998').click();
+    await page.getByLabel('Choose Sunday, March 29th,').click();
     await page.getByText('15:15').click();
-    await expect(pageManager.datePicker.Buttons.selectDateAndTimeButton).toHaveValue('July 26, 2024 3:15 PM');
-
+    await expect(pageManager.datePicker.Buttons.selectDateAndTimeButton).toHaveValue('March 29, 1998 3:15 PM');
   })
 
   function getTodayDate(): string {
