@@ -35,7 +35,8 @@ test.describe("Go to the Slider page by url. The Slider page has opened.", () =>
     await page.mouse.up();
     await expect(pageManager.droppable.Labels.preventFirstBigDropField).toHaveCSS("background-color", "rgb(70, 130, 180)");
     await expect(pageManager.droppable.Labels.preventFirstBigDropField).toContainText("Dropped");
-    await expect(pageManager.droppable.Labels.preventFirstSmallDropField).toContainText("Inner droppable (not greedy)");});
+    await expect(pageManager.droppable.Labels.preventFirstSmallDropField).toContainText("Inner droppable (not greedy)");
+  });
 
   test("Open Prevent Propogation Tab. Drag element to 'Inner droppable' field. Field 'Outer droppable' and 'Inner droppable (not greedy)' renamed to 'Dropped'and changed color. ", async ({page,pageManager}) => {
     await pageManager.droppable.Buttons.preventDroppableButton.click();

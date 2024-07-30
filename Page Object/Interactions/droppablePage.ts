@@ -25,4 +25,5 @@ export class DroppablePage extends basePage {
         notRevertDragField: this.page.locator('#notRevertable'),
         revertDropField:  this.page.getByLabel("Revert Draggable").locator("#droppable"),
     }
+    
 }
