@@ -24,7 +24,7 @@ test.describe("Go to the progress-bar page by url. The progress-bar page has ope
     await pageManager.progressBar.Buttons.startButton.click();
     await page.waitForTimeout(3500);
     await pageManager.progressBar.Buttons.stopButton.click();
-    await expect(pageManager.progressBar.Labels.progressFilledBarLabel).toHaveCSS('width','206.125px',);
+    await expect(pageManager.progressBar.Labels.progressFilledBarLabel).toHaveCSS('width','206.125px');
   });
 
 });
