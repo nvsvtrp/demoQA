@@ -7,9 +7,9 @@ export const test = base.extend<{ pageManager: PageManager }>({
         await use(pageManager);
     },
     
-page: async ({page}, use) => {
-    await page.goto('https://demoqa.com/');
-    await use(page);
+// page: async ({page}, use) => {
+//     await page.goto('https://demoqa.com/');
+//     await use(page);
 
-}
+// }
 })
