@@ -9,8 +9,6 @@ test.describe("Open login page", () => {
   test('Register user via API.', async ({ pageManager, pageManagerAPI, page }) => {
     const userName = pageManager.randomValues.getRandomUserName();
     const password = pageManager.randomValues.getRandomPassword();
-    console.log(userName);
-    console.log(password);
     await registerUser(userName, password, pageManager, pageManagerAPI, page);
     await pageManager.login.Fields.userNameField.fill(userName);
     await pageManager.login.Fields.passwordField.fill(password);
@@ -21,8 +19,6 @@ test.describe("Open login page", () => {
   test('Add book via API.', async ({ pageManager, pageManagerAPI, page }) => {
     const userName = pageManager.randomValues.getRandomUserName();
     const password = pageManager.randomValues.getRandomPassword();
-    console.log(userName)
-    console.log(password)
     await registerUser(userName, password, pageManager, pageManagerAPI, page);
     const isbn = await pageManagerAPI.loginAPI.getRandomBooksId();
     const token = await pageManagerAPI.loginAPI.generateToken(userName, password);
@@ -31,7 +27,8 @@ test.describe("Open login page", () => {
     await pageManager.login.Fields.userNameField.fill(userName);
     await pageManager.login.Fields.passwordField.fill(password);
     await pageManager.login.Buttons.loginButton.click();
-    await expect(pageManager.login.Labels.userNameLabel).toContainText(userName);
+    const bookInBagId = await pageManagerAPI.loginAPI.getUserBooks(userId, token)
+    await expect(isbn).toContain(bookInBagId);
   });
 
   async function registerUser(userName: string, password: string, pageManager, pageManagerAPI, page) {

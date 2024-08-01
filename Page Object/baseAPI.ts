@@ -7,7 +7,7 @@ page : Page
 constructor(page : Page) {
     this.page = page;}
 
-    async GetResponceBody(response) {
+    async getResponseBody(response) {
         const body = await JSON.parse((await response.body()).toString());
         return body;
     }

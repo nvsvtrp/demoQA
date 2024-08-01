@@ -8,18 +8,16 @@ export class LoginApi extends baseAPI {
 
     async registerUserRequest(userName: string, password: string) {
         const response = await this.page.request.post(`${this.baseUrl}/Account/v1/User`, {
-            data: {"userName":userName,"password":password}
+            data: {userName, password}
             });
-            const body = await this.GetResponceBody(response)
-            console.log(body.userID)
+            const body = await this.getResponseBody(response)
             return body.userID;
     }
 
     async generateToken(userName: string, password: string) {
         const response = await this.page.request.post(`${this.baseUrl}/Account/v1/GenerateToken`, {
-            data: {"userName":userName,"password":password}});
-            const body = await this.GetResponceBody(response);
-            console.log(body.token)
+            data: {userName, password}});
+            const body = await this.getResponseBody(response);
             return body.token;
     }
 
@@ -27,7 +25,7 @@ export class LoginApi extends baseAPI {
         const response = await this.page.request.post(`${this.baseUrl}/Account/v1/Login`, {
             data: {"userName":userName,"password":password}
             });
-            const body = await this.GetResponceBody(response)
+            const body = await this.getResponseBody(response)
             return body.userId;
     }
 
@@ -50,16 +48,13 @@ export class LoginApi extends baseAPI {
     }
     async getRandomBooksId() {
         const response = await this.page.request.get(`${this.baseUrl}/BookStore/v1/Books`, {
-            data: {}
             });
-            const body = await this.GetResponceBody(response);
+            const body = await this.getResponseBody(response);
             const isbns = body.books.map(book => book.isbn);
             const randomIndex = Math.floor(Math.random() * isbns.length);
             const randomIsbn = isbns[randomIndex];
-            console.log(randomIsbn);
             return randomIsbn;
     }
-
     async deleteUser(token: string, userId: string) {
         await this.page.request.delete(`${this.baseUrl}/Account/v1/User/${userId}`, {
             data: {
@@ -68,7 +63,6 @@ export class LoginApi extends baseAPI {
             }
         });
     }
-
     async deleteBook(isbn: string, userId: string) {
         const url = `${this.baseUrl}/BookStore/v1/Book?isbn=${isbn}&userId=${userId}`;
         await this.page.request.delete(url, {
@@ -77,19 +71,21 @@ export class LoginApi extends baseAPI {
         }
         });
     }
-
-    async checkBookInBag(checkUserId) {
-        const response = await this.page.request.get(`${this.baseUrl}Account/v1/User/${checkUserId}`, {
-            data: {
-                "userId": checkUserId
+    async getUserBooks(userId: string, token: string): Promise<any[]> {
+        const url = `${this.baseUrl}/Account/v1/User/${userId}`;
+        const response = await this.page.request.get(url, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
             }
-            });
-            const body = await this.GetResponceBody(response);
-            if (body.books && body.books.length > 0) {
-                return body.books[0].isbn;
-            } else {
-            console.log('No books found for this user.');
-            return null;
+        });
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
         }
-    }
-    }
+        const data = await this.getResponseBody(response);
+        const isbns = data.books.map(book => book.isbn);
+        return isbns[0]; 
+}
+
+}
+
