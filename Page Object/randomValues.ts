@@ -56,37 +56,37 @@ export class RandomValues extends basePage {
         return `${randomStreet} st. ${randomNumber}`;
     }
 
-    // getRandomPassword(): string {
-    //     const lower = 'abcdefghijklmnopqrstuvwxyz';
-    // const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    // const digits = '0123456789';
-    // const special = '@';
-    // const getRandomCharacter = (charset: string): string => {
-    //     const randomIndex = Math.floor(Math.random() * charset.length);
-    //     return charset[randomIndex];
-    // };
-    // let password = [
-    //     getRandomCharacter(lower),
-    //     getRandomCharacter(upper),
-    //     getRandomCharacter(digits),
-    //     getRandomCharacter(special)
-    // ];
-    // const allCharacters = lower + upper + digits + special;
+    getRandomPassword(): string {
+        const lower = 'abcdefghijklmnopqrstuvwxyz';
+    const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const digits = '0123456789';
+    const special = '@';
+    const getRandomCharacter = (charset: string): string => {
+        const randomIndex = Math.floor(Math.random() * charset.length);
+        return charset[randomIndex];
+    };
+    let password = [
+        getRandomCharacter(lower),
+        getRandomCharacter(upper),
+        getRandomCharacter(digits),
+        getRandomCharacter(special)
+    ];
+    const allCharacters = lower + upper + digits + special;
 
-    // while (password.length < 8) {
-    //     password.push(getRandomCharacter(allCharacters));
-    // }
+    while (password.length < 8) {
+        password.push(getRandomCharacter(allCharacters));
+    }
 
-    // password = password.sort(() => Math.random() - 0.5);
-    // const hasLower = password.some(char => lower.includes(char));
-    // const hasUpper = password.some(char => upper.includes(char));
-    // const hasDigit = password.some(char => digits.includes(char));
-    // const hasSpecial = password.some(char => special.includes(char));
-    // if (!hasLower || !hasUpper || !hasDigit || !hasSpecial) {
-    //     return this.getRandomPassword();
-    // }
-    // return password.join('');
-    // }
+    password = password.sort(() => Math.random() - 0.5);
+    const hasLower = password.some(char => lower.includes(char));
+    const hasUpper = password.some(char => upper.includes(char));
+    const hasDigit = password.some(char => digits.includes(char));
+    const hasSpecial = password.some(char => special.includes(char));
+    if (!hasLower || !hasUpper || !hasDigit || !hasSpecial) {
+        return this.getRandomPassword();
+    }
+    return password.join('');
+    }
 
     getRandomUserName() : string {
         const firstName: string[] = ["hot", "crispy", "cool", "spicy", "funny", "bright", "speedy", "shiny", "happy", "lazy"];
