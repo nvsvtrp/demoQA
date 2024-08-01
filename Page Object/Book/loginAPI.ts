@@ -23,7 +23,7 @@ export class LoginApi extends baseAPI {
 
     async login(userName: string, password: string) {
         const response = await this.page.request.post(`${this.baseUrl}/Account/v1/Login`, {
-            data: {"userName":userName,"password":password}
+            data: {userName, password}
             });
             const body = await this.getResponseBody(response)
             return body.userId;
