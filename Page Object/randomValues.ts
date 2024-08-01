@@ -57,13 +57,45 @@ export class RandomValues extends basePage {
     }
 
     getRandomPassword(): string {
-        const length = Math.floor(Math.random() * 3) + 8;
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+[]{}|;:,.<>?';
-        let password = '';
-        for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        password += characters[randomIndex];
+        const lower = 'abcdefghijklmnopqrstuvwxyz';
+    const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const digits = '0123456789';
+    const special = '@';
+    const getRandomCharacter = (charset: string): string => {
+        const randomIndex = Math.floor(Math.random() * charset.length);
+        return charset[randomIndex];
+    };
+    let password = [
+        getRandomCharacter(lower),
+        getRandomCharacter(upper),
+        getRandomCharacter(digits),
+        getRandomCharacter(special)
+    ];
+    const allCharacters = lower + upper + digits + special;
+
+    while (password.length < 8) {
+        password.push(getRandomCharacter(allCharacters));
     }
-        return password;
+
+    password = password.sort(() => Math.random() - 0.5);
+    const hasLower = password.some(char => lower.includes(char));
+    const hasUpper = password.some(char => upper.includes(char));
+    const hasDigit = password.some(char => digits.includes(char));
+    const hasSpecial = password.some(char => special.includes(char));
+    if (!hasLower || !hasUpper || !hasDigit || !hasSpecial) {
+        return this.getRandomPassword();
+    }
+    return password.join('');
+    }
+
+    getRandomUserName() : string {
+        const firstName: string[] = ["hot", "crispy", "cool", "spicy", "funny", "bright", "speedy", "shiny", "happy", "lazy"];
+        const lastName: string[] = ["pig", "elephant", "lion", "tiger", "bear", "cat", "dog", "rabbit", "fox", "wolf"];
+        const minValue = 1;
+        const maxValue = 1000;
+        const randomValue = Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
+        const randomEmail = firstName[Math.floor(Math.random() * firstName.length)];
+        const randomEmailServise = lastName[Math.floor(Math.random() * lastName.length)];
+        return `${randomEmail}${randomEmailServise}${randomValue}`;
     }
 }
