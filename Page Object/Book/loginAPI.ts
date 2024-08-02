@@ -95,10 +95,9 @@ export class LoginApi extends baseAPI {
         });
     }
     async getBooks() {
-        const response = await fetch(`${this.baseUrl}/BookStore/v1/Books`);
-        const data = await response.json();
-        return data.books;
+        const response = await this.page.request.get(`${this.baseUrl}/BookStore/v1/Books`, {});
+        const body = await this.getResponseBody(response);
+        return body.books;
     }
-
 }
 
