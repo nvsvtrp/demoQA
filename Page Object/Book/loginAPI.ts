@@ -73,11 +73,10 @@ export class LoginApi extends baseAPI {
                 'Content-Type': 'application/json'
             }
         });
-        console.log('Response status:', response.status());
-        console.log('Response body:', await response.text());
         if (!response.ok()) {
             throw new Error(`Failed to delete user. Status: ${response.status()}. Response body: ${await response.text()}`);
         }
+        return response
     }
 
     async deleteBook(isbn: string, userId: string, token: string) {

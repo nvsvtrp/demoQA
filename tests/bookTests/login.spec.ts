@@ -11,11 +11,10 @@ test.describe("Open login page", () => {
 
   test.afterEach(async ({ pageManagerAPI }) => {
     if (interceptedToken && userId) {
-      await pageManagerAPI.loginAPI.deleteUser(interceptedToken, userId);
-      console.log('User Deleted')
-      interceptedToken = null;
-      userId = null;
+      const response = await pageManagerAPI.loginAPI.deleteUser(interceptedToken, userId);
+      expect(response.status()).toBe(204);
     }
+
   });
 
   test('Register user via API.', async ({ pageManager, pageManagerAPI }) => {
@@ -33,8 +32,6 @@ test.describe("Open login page", () => {
     const { isbn, title } = books[Math.floor(Math.random() * books.length)];
     const userName = pageManager.randomValues.getRandomUserName();
     const password = pageManager.randomValues.getRandomPassword();
-    console.log(userName)
-    console.log(password)
     await pageManagerAPI.loginAPI.registerUserRequest(userName, password);
     userId = await pageManagerAPI.loginAPI.login(userName, password);
     interceptedToken = await pageManagerAPI.loginAPI.generateToken(userName, password);
