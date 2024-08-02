@@ -23,7 +23,8 @@ export class LoginPage extends basePage {
     }
 
     Labels = {
-        userNameLabel: this.page.locator('#userName-value')
+        userNameLabel: this.page.locator('#userName-value'),
+        bookLabel: this.page.locator('[class="rt-tr -odd"]')
     }
     
 }

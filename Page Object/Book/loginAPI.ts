@@ -26,7 +26,9 @@ export class LoginApi extends baseAPI {
             data: {userName, password}
             });
             const body = await this.getResponseBody(response)
-            return body.userId;
+            return body.userId
+  
+            
     }
 
     async postBookToAccount(userId: string, isbn: string, token: string) {
@@ -51,41 +53,52 @@ export class LoginApi extends baseAPI {
             });
             const body = await this.getResponseBody(response);
             const isbns = body.books.map(book => book.isbn);
-            const randomIndex = Math.floor(Math.random() * isbns.length);
-            const randomIsbn = isbns[randomIndex];
+            const randomIsbn = isbns[0];
             return randomIsbn;
     }
+
+    async getRandomBookTitle() {
+        const response = await this.page.request.get(`${this.baseUrl}/BookStore/v1/Books`, {
+            });
+            const body = await this.getResponseBody(response);
+            const title = body.books.map(book => book.title);
+            const randomTitle = title[0];
+            return randomTitle;
+    }
+    
     async deleteUser(token: string, userId: string) {
-        await this.page.request.delete(`${this.baseUrl}/Account/v1/User/${userId}`, {
-            data: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        });
-    }
-    async deleteBook(isbn: string, userId: string) {
-        const url = `${this.baseUrl}/BookStore/v1/Book?isbn=${isbn}&userId=${userId}`;
-        await this.page.request.delete(url, {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-        });
-    }
-    async getUserBooks(userId: string, token: string): Promise<any[]> {
-        const url = `${this.baseUrl}/Account/v1/User/${userId}`;
-        const response = await this.page.request.get(url, {
+        const response = await this.page.request.delete(`${this.baseUrl}/Account/v1/User/${userId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             }
         });
-        if (!response.ok) {
-            throw new Error(`Error: ${response.statusText}`);
+        console.log('Response status:', response.status());
+        console.log('Response body:', await response.text());
+        if (!response.ok()) {
+            throw new Error(`Failed to delete user. Status: ${response.status()}. Response body: ${await response.text()}`);
         }
-        const data = await this.getResponseBody(response);
-        const isbns = data.books.map(book => book.isbn);
-        return isbns[0]; 
-}
+    }
+
+    async deleteBook(isbn: string, userId: string, token: string) {
+        const url = `${this.baseUrl}/BookStore/v1/Book`;
+        return await this.page.request.delete(url, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        data: {
+            "isbn": isbn, 
+            "userId": userId
+        }
+        
+        });
+    }
+    async getBooks() {
+        const response = await fetch(`${this.baseUrl}/BookStore/v1/Books`);
+        const data = await response.json();
+        return data.books;
+    }
 
 }
 
