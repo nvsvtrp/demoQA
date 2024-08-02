@@ -10,21 +10,8 @@ test.describe("Open login page", () => {
   });
 
   test.afterEach(async ({ pageManagerAPI }) => {
-    if (interceptedToken && userId) {
       const response = await pageManagerAPI.loginAPI.deleteUser(interceptedToken, userId);
       expect(response.status()).toBe(204);
-    }
-
-  });
-
-  test('Register user via API.', async ({ pageManager, pageManagerAPI }) => {
-    const userName = pageManager.randomValues.getRandomUserName();
-    const password = pageManager.randomValues.getRandomPassword();
-    await pageManagerAPI.loginAPI.registerUserRequest(userName, password);
-    await pageManager.login.Fields.userNameField.fill(userName);
-    await pageManager.login.Fields.passwordField.fill(password);
-    await pageManager.login.Buttons.loginButton.click();
-    await expect(pageManager.login.Labels.userNameLabel).toContainText(userName);
   });
 
   test('Add book via API and delete user.', async ({ pageManager, pageManagerAPI, page }) => {
@@ -76,4 +63,16 @@ test.describe("Open login page", () => {
     await pageManager.login.Buttons.loginButton.click();
     await expect(page.locator('#name')).toContainText('Invalid username or password!');
   });
+
+  test('Register user via API.', async ({ pageManager, pageManagerAPI }) => {
+    const userName = pageManager.randomValues.getRandomUserName();
+    const password = pageManager.randomValues.getRandomPassword();
+    await pageManagerAPI.loginAPI.registerUserRequest(userName, password);
+    await pageManager.login.Fields.userNameField.fill(userName);
+    await pageManager.login.Fields.passwordField.fill(password);
+    await pageManager.login.Buttons.loginButton.click();
+    await expect(pageManager.login.Labels.userNameLabel).toContainText(userName);
+  });
+
+
 });
