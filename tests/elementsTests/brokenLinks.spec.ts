@@ -19,7 +19,6 @@ test.describe('Open the main page of the site. Click to the Elements button. The
         await expect(page).toHaveURL('https://the-internet.herokuapp.com/status_codes/500');
      })
 
-
     test('Check if image is displayed', async ({ page, pageManager }) => {
         await pageManager.brokenLinks.Buttons.brokenLinksButton.click();
         const images = page.locator('img[src="/images/Toolsqa.jpg"]');
