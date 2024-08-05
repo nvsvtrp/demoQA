@@ -3,8 +3,8 @@ import { expect } from "@playwright/test";
 
 
 test.describe('Open the main page of the site. Click to the Elements button. The Elements page has opened.', () => {
-    test.beforeEach (async ({pageManager})=> {
-    await pageManager.main.Buttons.elementsButton.click();
+    test.beforeEach (async ({page})=> {
+        await page.goto("/elements");
     }) 
 
     test ('Click to BrokenLinks button. Click to the Valid Link. Link is opened.', async ({page, pageManager}) => {

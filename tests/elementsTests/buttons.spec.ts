@@ -1,10 +1,9 @@
-import { PageManager } from "../../Page Object/pageManager";
 import { test } from "../baseTest";
 import { expect } from "@playwright/test";
 
 test.describe('Open the main page of the site. Click to the Buttons button. The buttons page has opened.', () => {
-    test.beforeEach (async ({page, pageManager})=> {
-    await pageManager.main.Buttons.elementsButton.click();  
+    test.beforeEach (async ({page})=> {
+    await page.goto("/elements");
     }) 
 
 

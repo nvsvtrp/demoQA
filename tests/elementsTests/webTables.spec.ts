@@ -2,9 +2,9 @@ import { test } from "../baseTest";
 import { expect } from "@playwright/test";
 
 test.describe('Open the main page of the site. Click to the Elements button. The elements page has opened.', () => {
-    test.beforeEach (async ({pageManager})=> {
-    await pageManager.main.Buttons.elementsButton.click();
-    }) 
+    test.beforeEach (async ({page}) => {
+        await page.goto("/elements");
+    })
 
 
     test ('Click to Web Tables button. Click to the add button. Fill correct values. New member has been added', async ({pageManager,page}) => {
